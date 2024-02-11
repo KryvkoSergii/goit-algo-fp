@@ -15,7 +15,6 @@ class Node:
 def add_edges(graph, node, pos, x=0, y=0, layer=1):
     if node is not None:
         graph.add_node(node.id, color=node.color, label=str(node.val))
-        print(node.__dict__)
         if node.left:
             graph.add_edge(node.id, node.left.id)
             l = x - 1 / 2 ** layer
@@ -40,18 +39,23 @@ def draw_tree(tree_root):
     nx.draw(tree, pos=pos, labels=labels, arrows=False, node_size=2500, node_color=colors)
     plt.show()
 
-def insert_into_tree(arr, i, n):
+def insert_into_tree(arr, i, n, unique):
     if i < n:
-        node = Node(arr[i])
-        node.left = insert_into_tree(arr, i + 1, n)
-        node.right = insert_into_tree(arr, i + 2, n)
-        return node
+        element = arr[i]
+        if element not in unique:
+            unique.add(element)
+            node = Node(element)
+            node.left = insert_into_tree(arr, i + 1, n, unique)
+            node.right = insert_into_tree(arr, i + 2, n, unique)
+            return node
     return None
+
 def build_tree_from_heap(arr):
     n = len(arr)
-    return insert_into_tree(arr, 0, n)
+    unique = set()
+    return insert_into_tree(arr, 0, n, unique)
 
-list = [random.randint(1, 100) for _ in range(5)]
+list = [random.randint(1, 1000) for _ in range(5)]
 heapq.heapify(list)
 root = build_tree_from_heap(list)
 
