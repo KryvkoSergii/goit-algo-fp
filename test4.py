@@ -41,13 +41,10 @@ def draw_tree(tree_root):
 
 def insert_into_tree(arr, i, n, unique):
     if i < n:
-        element = arr[i]
-        if element not in unique:
-            unique.add(element)
-            node = Node(element)
-            node.left = insert_into_tree(arr, i + 1, n, unique)
-            node.right = insert_into_tree(arr, i + 2, n, unique)
-            return node
+        node = Node(arr[i])
+        node.left = insert_into_tree(arr, 2*i + 1, n, unique)
+        node.right = insert_into_tree(arr, 2*i + 2, n, unique)
+        return node
     return None
 
 def build_tree_from_heap(arr):
