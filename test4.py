@@ -39,18 +39,17 @@ def draw_tree(tree_root):
     nx.draw(tree, pos=pos, labels=labels, arrows=False, node_size=2500, node_color=colors)
     plt.show()
 
-def insert_into_tree(arr, i, n, unique):
+def insert_into_tree(arr, i, n):
     if i < n:
         node = Node(arr[i])
-        node.left = insert_into_tree(arr, 2*i + 1, n, unique)
-        node.right = insert_into_tree(arr, 2*i + 2, n, unique)
+        node.left = insert_into_tree(arr, 2*i + 1, n)
+        node.right = insert_into_tree(arr, 2*i + 2, n)
         return node
     return None
 
 def build_tree_from_heap(arr):
     n = len(arr)
-    unique = set()
-    return insert_into_tree(arr, 0, n, unique)
+    return insert_into_tree(arr, 0, n)
 
 list = [random.randint(1, 1000) for _ in range(5)]
 heapq.heapify(list)
